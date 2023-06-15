@@ -146,22 +146,23 @@ li{
 }
 button {
     text-align: center;
-    font-size: 24px;
     color: white;
-    background-color: hsl(215, 18%, 13%);
     width: 100%;
     padding: 15px;
     border: 0;
     outline:none;
     cursor: pointer;
     margin-top: 5px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    text-decoration: none;
+   
 }
 
 .buy{
     background-color: rgb(12, 96, 252);
+    font-size: 24px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    text-decoration: none;
+    color: white;
 }
 
 @media(max-width:1000px){
