@@ -185,9 +185,6 @@ li{
     .index_header__ativo{
         height: 350px;
     }
-    .dropdown-item{
-        height: 350px;
-    }
 }
 @media (max-width: 767px) {
     .navbar-nav .dropdown-menu {
