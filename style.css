@@ -44,21 +44,21 @@ span{
     justify-content: space-around;
     align-items: center;
 }
-.logo_Container h1{
-    color: white;
-    height: 100%;
-    display: table-cell;
-    vertical-align: middle;
-    font-size: 32px;
-    font-weight: 100;
-    
-}
 .logo_Container h1 span{
     font-weight: 1000;
 }
 .navbar-light .navbar-brand {
-    color:white;
+    color: white;
+    height: 100%;
+    font-size: 24px;
+    font-weight: 100;
+    text-decoration: none;
 }
+
+.navbar-light .navbar-brand:hover{
+    color: white;
+}
+
 .navigation{
     float: right;
     height: 100%;
