@@ -172,6 +172,10 @@ li{
     margin-top: 5px;
 }
 
+.cart-table th{
+    padding: 5px;
+}
+
 @media(max-width:1000px){
     .content{
         width: 45%;
