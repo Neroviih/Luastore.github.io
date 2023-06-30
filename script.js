@@ -41,8 +41,6 @@ $(document).ready(function() {
   });  
 });
 
-
-
 // Função para adicionar um item ao carrinho
 function addToCart(item) {
   const cartBody = document.getElementById("cartBody");
