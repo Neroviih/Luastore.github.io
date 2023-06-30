@@ -104,6 +104,9 @@ function checkout() {
     while (cartBody.firstChild) {
       cartBody.removeChild(cartBody.firstChild);
     }
+    
+    // Redirecionar para o WhatsApp
+    window.location.href = "https://api.whatsapp.com/send?phone=5513991559353";
   } else {
     alert("O carrinho está vazio. Adicione itens antes de finalizar a compra.");
   }
