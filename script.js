@@ -1,149 +1,149 @@
-// Aguarda o evento 'DOMContentLoaded' antes de executar o código
-document.addEventListener('DOMContentLoaded', function() {
-  // Obtém a referência do elemento HTML da barra de pesquisa
-  const searchInput = document.getElementById('searchInput');
-  // Obtém a referência do elemento HTML do botão "Procurar"
-  const searchButton = document.getElementById('searchBut');
-  // Obtém a referência do elemento HTML da galeria
-  const gallery = document.getElementById('gallery');
-  // Obtém os itens originais da galeria como um array
-  const originalItems = Array.from(gallery.getElementsByClassName('content'));
-
+// Script.js
+$(document).ready(function() {
+  // ... (código existente)
+  
   // Função para filtrar os itens
   function filterItems() {
-    // Corrige o retorno para a página padrão já que o botão se encontra dentro do formulário.
-    event.preventDefault();
-    // Obtém o termo de pesquisa digitado pelo usuário e converte para minúsculas
-    const searchTerm = searchInput.value.toLowerCase();
-
-    // Filtra os itens originais com base no termo de pesquisa
-    const filteredItems = originalItems.filter(function(item) {
-      // Obtém o nome do item (conteúdo do primeiro elemento h3 dentro do item)
-      const itemName = item.getElementsByTagName('h3')[0].textContent.toLowerCase();
-      // Verifica se o nome do item contém o termo de pesquisa
-      return itemName.includes(searchTerm);
+    const searchValue = $("#searchInput").val().toLowerCase();
+    const items = $(".content");
+    
+    // Esconde todos os itens
+    items.hide();
+    
+    // Filtra os itens que correspondem à pesquisa
+    const filteredItems = items.filter(function() {
+      const itemName = $(this).find("h3").text().toLowerCase();
+      return itemName.includes(searchValue);
     });
-
-    // Remove todos os itens da galeria
-    while (gallery.firstChild) {
-      gallery.removeChild(gallery.firstChild);
-    }
-
-    // Adiciona os itens filtrados de volta à galeria
-    filteredItems.forEach(function(item) {
-      gallery.appendChild(item);
-    });
+    
+    // Mostra os itens filtrados
+    filteredItems.show();
+    
+    // Esconde o carrinho e mostra o botão "Voltar para todos os itens"
+    $("#cartIcon").show();
+    $("#cartContent").hide();
+    $("#filteredItems").show();
   }
-
-  // Adiciona um ouvinte de eventos ao botão "Procurar" para acionar a função de filtragem quando clicado
-  searchButton.addEventListener('click', filterItems);
+  
+  // Evento de clique no botão de procurar
+  $("#searchBut").on("click", function(event) {
+    event.preventDefault();
+    filterItems();
+  });
+  
+  // Evento de clique no botão "Voltar para todos os itens"
+  $("#backToAllItemsButton").on("click", function() {
+    // Limpa o campo de pesquisa
+    $("#searchInput").val("");
+    // Reexibe todos os itens e oculta o botão "Voltar para todos os itens"
+    $(".content").show();
+    $("#filteredItems").hide();
+  });  
 });
 
 
-class Cart {
-  constructor() {
-    this.cartItems = [];
-    this.cartBody = document.getElementById('cartBody');
-    this.checkoutButton = document.getElementById('checkoutButton');
-    this.removeButton = document.getElementById('removeButton');
-    this.initialize();
-  }
 
-  initialize() {
-    const addToCartButtons = document.getElementsByClassName('addToCartButton');
-    for (const button of addToCartButtons) {
-      button.addEventListener('click', () => this.addToCart(button.parentElement, true));
+// Função para adicionar um item ao carrinho
+function addToCart(item) {
+  const cartBody = document.getElementById("cartBody");
+
+  // Cria uma nova linha na tabela do carrinho
+  const newRow = document.createElement("tr");
+
+  // Cria as células para o item, o preço e a checkbox
+  const itemCell = document.createElement("td");
+  const priceCell = document.createElement("td");
+  const checkboxCell = document.createElement("td");
+
+  // Define o conteúdo das células
+  itemCell.textContent = item.name;
+  priceCell.textContent = "R$" + item.price.toFixed(2);
+
+  // Cria a checkbox
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+
+  // Adiciona a checkbox à célula
+  checkboxCell.appendChild(checkbox);
+
+  // Adiciona as células à linha
+  newRow.appendChild(itemCell);
+  newRow.appendChild(priceCell);
+  newRow.appendChild(checkboxCell);
+
+  // Adiciona a linha à tabela do carrinho
+  cartBody.appendChild(newRow);
+}
+
+// Função para remover itens selecionados do carrinho
+function removeSelectedItems() {
+  const cartBody = document.getElementById("cartBody");
+
+  // Obtém todas as linhas da tabela do carrinho
+  const rows = cartBody.getElementsByTagName("tr");
+
+  // Percorre as linhas em ordem reversa para evitar problemas com a remoção
+  for (let i = rows.length - 1; i >= 0; i--) {
+    const row = rows[i];
+
+    // Verifica se a checkbox da linha está selecionada
+    const checkbox = row.getElementsByTagName("input")[0];
+    if (checkbox.checked) {
+      // Remove a linha
+      cartBody.removeChild(row);
     }
-
-    this.checkoutButton.addEventListener('click', () => this.checkout());
-    this.removeButton.addEventListener('click', () => this.removeSelectedItems());
-  }
-
-  addToCart(item) {
-    const itemName = item.querySelector('h3').textContent;
-    const itemPrice = item.querySelector('h6').textContent;
-
-    const newRow = this.cartBody.insertRow();
-
-    const nameCell = newRow.insertCell();
-    const priceCell = newRow.insertCell();
-    const checkboxCell = newRow.insertCell();
-
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.className = 'productCheckbox';
-    checkboxCell.appendChild(checkbox);
-
-    nameCell.innerHTML = itemName;
-    priceCell.innerHTML = itemPrice;
-
-    const cartItem = {
-      name: itemName,
-      price: itemPrice,
-      row: newRow // Armazena a referência da linha na tabela para remover posteriormente
-    };
-
-    this.cartItems.push(cartItem);
-  }
-
-  renderCartItem(cartItem) {
-    const cartRow = document.createElement('tr');
-    const itemNameCell = document.createElement('td');
-    const itemPriceCell = document.createElement('td');
-    const checkboxCell = document.createElement('td');
-
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.className = 'productCheckbox';
-    checkboxCell.appendChild(checkbox);
-
-    itemNameCell.textContent = cartItem.name;
-    itemPriceCell.textContent = cartItem.price;
-
-    cartRow.appendChild(itemNameCell);
-    cartRow.appendChild(itemPriceCell);
-    cartRow.appendChild(checkboxCell);
-
-    cartItem.row = cartRow; // Armazena a referência da linha na tabela para remover posteriormente
-
-    this.cartBody.appendChild(cartRow);
-  }
-
-  checkout() {
-    let message = 'Olá, estou interessado nos seguintes itens: \n\n';
-
-    const cartItems = Array.from(this.cartBody.getElementsByTagName('tr'));
-
-    cartItems.forEach(function(cartItem) {
-      const itemName = cartItem.querySelector('td:first-child').textContent;
-      const itemPrice = cartItem.querySelector('td:nth-child(2)').textContent;
-
-      message += itemName + ' - ' + itemPrice + '\n';
-    });
-
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappURL = 'https://api.whatsapp.com/send?phone=5513991559353&text=' + encodedMessage;
-
-    window.open(whatsappURL);
-  }
-
-  removeSelectedItems() {
-    const checkboxes = document.getElementsByClassName('productCheckbox');
-    const checkboxesArray = Array.from(checkboxes);
-    const selectedItems = [];
-
-    checkboxesArray.forEach(function(checkbox, index) {
-      if (checkbox.checked) {
-        selectedItems.push(index);
-      }
-    });
-
-    selectedItems.reverse().forEach((index) => {
-      const cartItem = this.cartItems[index];
-      this.cartItems.splice(index, 1);
-      cartItem.row.remove();
-    });
   }
 }
 
-const cart = new Cart();
+// Função para finalizar a compra
+function checkout() {
+  const cartBody = document.getElementById("cartBody");
+
+  // Verifica se há itens no carrinho
+  if (cartBody.hasChildNodes()) {
+    alert("Compra finalizada. Obrigado!");
+    // Limpa o carrinho
+    while (cartBody.firstChild) {
+      cartBody.removeChild(cartBody.firstChild);
+    }
+  } else {
+    alert("O carrinho está vazio. Adicione itens antes de finalizar a compra.");
+  }
+}
+
+// Função para fechar o carrinho
+function closeCart() {
+  const cartContent = document.getElementById("cartContent");
+  cartContent.style.display = "none";
+}
+
+// Função para exibir o carrinho
+function showCart() {
+  const cartContent = document.getElementById("cartContent");
+  cartContent.style.display = "block";
+}
+
+// Obtém os botões relevantes e adiciona os eventos
+document.addEventListener("DOMContentLoaded", function() {
+  const addToCartButtons = document.getElementsByClassName("addToCartButton");
+  const removeButton = document.getElementById("removeButton");
+  const checkoutButton = document.getElementById("checkoutButton");
+  const cartCloseButton = document.getElementById("cartCloseButton");
+  const cartIcon = document.getElementById("cartIcon");
+
+  for (let i = 0; i < addToCartButtons.length; i++) {
+    const button = addToCartButtons[i];
+    button.addEventListener("click", function() {
+      const item = {
+        name: this.parentNode.getElementsByTagName("h3")[0].textContent,
+        price: parseFloat(this.parentNode.getElementsByTagName("h6")[0].textContent.replace("R$", ""))
+      };
+      addToCart(item);
+    });
+  }
+
+  removeButton.addEventListener("click", removeSelectedItems);
+  checkoutButton.addEventListener("click", checkout);
+  cartCloseButton.addEventListener("click", closeCart);
+  cartIcon.addEventListener("click", showCart);
+});

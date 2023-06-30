@@ -174,7 +174,91 @@ li{
 
 .cart-table th{
     padding: 5px;
+
 }
+
+.cart {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    background-color: hsl(216, 19%, 11%);
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  /* Estilos para o ícone do carrinho */
+.cart-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #f5a623;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  /* Estilos para a janela do carrinho */
+  .content.cart {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    width: 300px;
+    background-color: hsl(216, 19%, 11%);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+    display: none;
+  }
+  
+  /* Estilos para o cabeçalho do carrinho */
+  .cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .cart-header h3 {
+    font-size: 18px;
+  }
+  
+  /* Estilos para os botões no carrinho */
+  .buy.btn {
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  /* Estilos para a tabela do carrinho */
+  .cart-table {
+    width: 100%;
+  }
+  
+  .cart-table th {
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .cart-table th,
+  .cart-table td {
+    padding: 5px 0;
+  }
+  
+  /* Estilos para o botão de fechar o carrinho */
+  .close-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 18px;
+    color: #333;
+  }
 
 @media(max-width:1000px){
     .content{
