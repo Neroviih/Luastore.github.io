@@ -119,7 +119,7 @@ function checkout() {
     const encodedMessage = encodeURI(message);
 
     // Redirecionar para o WhatsApp com a mensagem
-    window.location.href = "https://api.whatsapp.com/send?phone=SEU_NUMERO_DE_TELEFONE&text=" + encodedMessage;
+    window.location.href = "https://api.whatsapp.com/send?phone=13991559353&text=" + encodedMessage, "_blank";
   } else {
     alert("O carrinho está vazio. Adicione itens antes de finalizar a compra.");
   }
