@@ -96,17 +96,30 @@ function removeSelectedItems() {
 // Função para finalizar a compra
 function checkout() {
   const cartBody = document.getElementById("cartBody");
+  let message = "Olá, gostaria de fazer o pedido dos seguintes itens:\n\n";
 
   // Verifica se há itens no carrinho
   if (cartBody.hasChildNodes()) {
-    alert("Compra finalizada. Obrigado!");
+    const rows = cartBody.getElementsByTagName("tr");
+
+    // Percorre as linhas da tabela do carrinho
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+      const itemName = row.getElementsByTagName("td")[0].textContent;
+      const itemPrice = row.getElementsByTagName("td")[1].textContent;
+      message += "- " + itemName + " - " + itemPrice + "\n";
+    }
+
     // Limpa o carrinho
     while (cartBody.firstChild) {
       cartBody.removeChild(cartBody.firstChild);
     }
-    
-    // Redirecionar para o WhatsApp
-    window.location.href = "https://api.whatsapp.com/send?phone=5513991559353";
+
+    // Codifica a mensagem para a URL do WhatsApp
+    const encodedMessage = encodeURI(message);
+
+    // Redirecionar para o WhatsApp com a mensagem
+    window.location.href = "https://api.whatsapp.com/send?phone=SEU_NUMERO_DE_TELEFONE&text=" + encodedMessage;
   } else {
     alert("O carrinho está vazio. Adicione itens antes de finalizar a compra.");
   }
