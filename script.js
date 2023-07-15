@@ -1,44 +1,41 @@
-// Script.js
-$(document).ready(function() {
-  // ... (código existente)
-  
+$(document).ready(function () {
   // Função para filtrar os itens
+  $("#filteredItems").hide();
   function filterItems() {
     const searchValue = $("#searchInput").val().toLowerCase();
     const items = $(".content");
-    
-    // Esconde todos os itens
+
     items.hide();
-    
+
     // Filtra os itens que correspondem à pesquisa
-    const filteredItems = items.filter(function() {
+    const filteredItems = items.filter(function () {
       const itemName = $(this).find("h3").text().toLowerCase();
       return itemName.includes(searchValue);
     });
-    
+
     // Mostra os itens filtrados
     filteredItems.show();
-    
+
     // Esconde o carrinho e mostra o botão "Voltar para todos os itens"
     $("#cartIcon").show();
     $("#cartContent").hide();
     $("#filteredItems").show();
   }
-  
+
   // Evento de clique no botão de procurar
-  $("#searchBut").on("click", function(event) {
+  $("#searchBut").on("click", function (event) {
     event.preventDefault();
     filterItems();
   });
-  
+
   // Evento de clique no botão "Voltar para todos os itens"
-  $("#backToAllItemsButton").on("click", function() {
+  $("#backToAllItemsButton").on("click", function () {
     // Limpa o campo de pesquisa
     $("#searchInput").val("");
     // Reexibe todos os itens e oculta o botão "Voltar para todos os itens"
     $(".content").show();
     $("#filteredItems").hide();
-  });  
+  });
 });
 
 // Função para adicionar um item ao carrinho
@@ -107,7 +104,7 @@ function checkout() {
       const row = rows[i];
       const itemName = row.getElementsByTagName("td")[0].textContent;
       const itemPrice = row.getElementsByTagName("td")[1].textContent;
-      message += "- " + itemName + " - " + itemPrice + "\n";
+      message += " - " + itemName + " - " + itemPrice + "\n";
     }
 
     // Limpa o carrinho
@@ -119,7 +116,9 @@ function checkout() {
     const encodedMessage = encodeURI(message);
 
     // Redirecionar para o WhatsApp com a mensagem
-    window.location.href = "https://api.whatsapp.com/send?phone=13991559353&text=" + encodedMessage, "_blank";
+    (window.location.href =
+      "https://api.whatsapp.com/send?phone=13991559353&text=" + encodedMessage),
+      "_blank";
   } else {
     alert("O carrinho está vazio. Adicione itens antes de finalizar a compra.");
   }
@@ -138,7 +137,7 @@ function showCart() {
 }
 
 // Obtém os botões relevantes e adiciona os eventos
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   const addToCartButtons = document.getElementsByClassName("addToCartButton");
   const removeButton = document.getElementById("removeButton");
   const checkoutButton = document.getElementById("checkoutButton");
@@ -147,10 +146,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
   for (let i = 0; i < addToCartButtons.length; i++) {
     const button = addToCartButtons[i];
-    button.addEventListener("click", function() {
+    button.addEventListener("click", function () {
       const item = {
         name: this.parentNode.getElementsByTagName("h3")[0].textContent,
-        price: parseFloat(this.parentNode.getElementsByTagName("h6")[0].textContent.replace("R$", ""))
+        price: parseFloat(
+          this.parentNode
+            .getElementsByTagName("h6")[0]
+            .textContent.replace("R$", "")
+        ),
       };
       addToCart(item);
     });
