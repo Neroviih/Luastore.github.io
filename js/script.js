@@ -34,6 +34,7 @@ $(document).ready(function () {
     $("#searchInput").val("");
     // Reexibe todos os itens e oculta o botão "Voltar para todos os itens"
     $(".content").show();
+    $("#cartContent").hide();
     $("#filteredItems").hide();
   });
 });
@@ -124,6 +125,16 @@ function checkout() {
   }
 }
 
+$(document).ready(function () {
+  $("#instaIcon").click(function () {
+    window.open("https://www.instagram.com/luastore3d/", "_blank");
+  });
+
+  $("#TiktokIcon").click(function () {
+    window.open("https://www.tiktok.com/@luastore3d", "_blank");
+  });
+});
+
 // Função para fechar o carrinho
 function closeCart() {
   const cartContent = document.getElementById("cartContent");
@@ -156,6 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ),
       };
       addToCart(item);
+      showCart();
     });
   }
 
